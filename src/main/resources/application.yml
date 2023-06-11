@@ -1,0 +1,36 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: ms-commands
+  profiles:
+    active:
+      - dev
+  config:
+    import: optional:configserver:http://config.sweetify.com/
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://auth.sweetify.com/realms/sweetify
+  datasource:
+    url: jdbc:postgresql://localhost:32768/commands
+    username: postgres
+    password: postgrespw
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery.sweetify.com/eureka/
+
+ms-commands:
+  ms-products:
+    base-url: http://localhost:8082/products/
+    add-stock-uri: stock/add
+    consume-stock-uri: stock/consume
